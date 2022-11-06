@@ -62,10 +62,6 @@ glm::vec2 send= glm::vec2(1.,1.);
 glm::vec2 startaux(-1., -1.);
 glm::vec2 endaux(1., 1.);
 
-
-float totaltime = 0;
-int countframes = 0;
-
 unsigned int utrans;
 glm::mat4 trans = glm::mat4(1.f);
 float angle = 0.f;
@@ -74,7 +70,7 @@ float angle = 0.f;
 // Funciones auxiliares
 //////////////////////////////////////////////////////////////
 
-//Declaración de CB
+//DeclaraciÃ³n de CB
 void renderFunc();
 void resizeFunc(int width, int height);
 void idleFunc();
@@ -82,7 +78,7 @@ void keyboardFunc(unsigned char key, int x, int y);
 void mouseFunc(int button, int state, int x, int y);
 void mouseMotionFunc(int, int);
 
-//Funciones de inicialización y destrucción
+//Funciones de inicializaciÃ³n y destrucciÃ³n
 void initContext(int argc, char** argv);
 void initOGL();
 void initShader(const char *vname, const char *fname);
@@ -135,7 +131,7 @@ void initContext(int argc, char** argv){
 
 	// Definimos el Frame Buffer y creamos la ventana
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);	// Frame Buffer por defecto
-	glutInitWindowSize(WIDTH, HEIGHT);								// Tamaño de la ventana
+	glutInitWindowSize(WIDTH, HEIGHT);								// TamaÃ±o de la ventana
 	glutInitWindowPosition(0, 0);								// Posicion de la ventana
 	glutCreateWindow("Fractal Creator");							// Crea la ventana
 
@@ -288,7 +284,7 @@ GLuint loadShader(const char *fileName, GLenum type)
 	char* source = loadStringFromFile(fileName, fileLen);		// carga el codigo del shader
 
 	////////////////////////////////////////////// 
-	//Creación y compilación del Shader 
+	//CreaciÃ³n y compilaciÃ³n del Shader 
 	GLuint shader;												 
 	shader = glCreateShader(type);								// crea un ID para el shader
 	glShaderSource(shader, 1, 
@@ -296,7 +292,7 @@ GLuint loadShader(const char *fileName, GLenum type)
 	glCompileShader(shader);									// compila el shader
 	delete[] source;											// libera espacio
 
-	//Comprobamos que se compiló bien 
+	//Comprobamos que se compilÃ³ bien 
 	GLint compiled; 
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled); 
 	if (!compiled) { 
@@ -402,15 +398,6 @@ void renderFunc()
 	auto end1 = std::chrono::system_clock::now();
 
 	glutSwapBuffers();
-
-	// Se calculan los tiempos de renderizado y computo y el numero de frames por segundo
-	/*std::chrono::duration<float, std::milli> duration1 = end1 - start1;
-	std::chrono::duration<float, std::milli> duration0 = end0 - start0;
-	totaltime += duration1.count()+duration0.count();
-	countframes++;
-	std::cout << duration0.count() << " s compute" << std::endl;
-	std::cout << duration1.count() << " s render" << std::endl;
-	std::cout << countframes / totaltime << " mean total FPS " << std::endl;*/
 
 	std::cout << "Calculations done" << std::endl;
 
@@ -545,43 +532,6 @@ glm::mat4x2 rootssolver() {
 
 		sol[3].x = x4.real();
 		sol[3].y = x4.imag();
-
-
-		/*complex<double> p1 = 2. * coeff.z * coeff.z * coeff.z - 9. * coeff.y * coeff.z * coeff.w + 
-			27. * coeff.x * coeff.w * coeff.w + 27. * coeff.y * coeff.y * a.x - 
-			72. * coeff.x * coeff.z * a.x;
-		complex<double>p2 = p1 + sqrt(-4. * pow(coeff.z * coeff.z - 3. * coeff.y * coeff.w + 
-			12. * coeff.x * a.x, 3.) + p1 * p1);
-		complex<double> auxp30 = (coeff.z * coeff.z - 3. * coeff.y * coeff.w + 12. * coeff.x * a.x) /
-			(3. * coeff.x * pow(p2 / 2., 1. / 3.));
-		complex<double> auxp31 = pow(p2 / 2., 1. / 3.) / (3. * coeff.x);
-		complex<double>p3 = auxp30 + auxp31;
-		complex<double>p4 = sqrt(coeff.y * coeff.y / (4. * coeff.x * coeff.x) - 
-			2. * coeff.z / (3. * coeff.x) + p3);
-		complex<double>p5 = coeff.y * coeff.y / (2. * coeff.x * coeff.x) - 4. * coeff.z / (3. * coeff.x)
-			- p3;
-		complex<double>p6 = (-coeff.y * coeff.y * coeff.y / (coeff.x * coeff.x * coeff.x) + 
-			4. * coeff.y * coeff.z / (coeff.x * coeff.x) - 8. * coeff.w / coeff.x) / (4. * p4);
-
-		double aux = -coeff.y / (4. * coeff.x);
-
-		complex<double>x1 = aux - .5 * (p4 + sqrt(p5 - p6));
-		complex<double>x2 = aux - .5 * (p4 - sqrt(p5 - p6));
-		complex<double>x3 = aux + .5 * (p4 - sqrt(p5 - p6));
-		complex<double>x4 = aux + .5 * (p4 + sqrt(p5 - p6));
-
-
-		sol[0].x = x1.real();
-		sol[0].y = x1.imag();
-
-		sol[1].x = x2.real();
-		sol[1].y = x2.imag();
-
-		sol[2].x = x3.real();
-		sol[2].y = x3.imag();
-
-		sol[3].x = x4.real();*/
-		//sol[3].y = x4.imag();
 	}
 	else if (coeff.y != 0) {
 		double delta0 = (double)coeff.z * coeff.z - 3. * coeff.y * coeff.w;
