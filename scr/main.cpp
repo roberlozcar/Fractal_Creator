@@ -54,6 +54,7 @@ unsigned int ua;
 unsigned int usol;
 unsigned int ustart;
 unsigned int uend;
+unsigned int ugamma;
 
 glm::ivec2 wgs = glm::ivec2(16);
 glm::ivec2 size= glm::ivec2(WIDTH, HEIGHT);
@@ -61,6 +62,7 @@ glm::vec2 sstart= glm::vec2(-1., -1.);
 glm::vec2 send= glm::vec2(1.,1.);
 glm::vec2 startaux(-1., -1.);
 glm::vec2 endaux(1., 1.);
+float gamma = 15.f;
 
 unsigned int utrans;
 glm::mat4 trans = glm::mat4(1.f);
@@ -251,6 +253,7 @@ void initShader2(const char* name) {
 	usol= glGetUniformLocation(program2, "solutions");
 	ustart= glGetUniformLocation(program2, "start");
 	uend= glGetUniformLocation(program2, "end");
+	ugamma= glGetUniformLocation(program2, "gamma");
 }
 
 void initObj()
@@ -372,6 +375,8 @@ void renderFunc()
 		glUniform2fv(ustart, 1, &sstart[0]);
 	if (uend != -1)
 		glUniform2fv(uend, 1, &send[0]);
+	if (ugamma != -1)
+		glUniform1f(ugamma, gamma);
 
 	auto start0 = std::chrono::system_clock::now();
 	// Se lanzan los compute shaders
@@ -450,6 +455,14 @@ void keyboardFunc(unsigned char key, int x, int y){
 	else if (key == 'e' || key == 'e') {
 		angle += c;
 		trans = rotate(mat4(1.f), angle, vec3(0.f, 0.f, 1.f));
+		glutPostRedisplay();
+	}
+	else if (key == '+') {
+		gamma--;
+		glutPostRedisplay();
+	}
+	else if (key == '-') {
+		gamma++;
 		glutPostRedisplay();
 	}
 }

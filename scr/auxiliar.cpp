@@ -1,5 +1,3 @@
-#include <windows.h>
-
 #include <fstream>
 
 //Carga de texturas

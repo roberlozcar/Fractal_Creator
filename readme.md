@@ -13,6 +13,7 @@ We calculate the roots of the polynomial previously in CPU using the closed form
 - In the console, you can input the five coefficients of the polynomial. At least, you must input a second-degree polynomial.
 - You can change the resolution of the window and the resolution of the computation too.
 - You can move and zoom the fractal using the mouse. It will be recalculated, so it is not like zooming in on a photo.
+- You can change the gamma of the image with '+' and '-'.
 - A screenshot can be done by pressing s and the view can be reset by pressing r.
 
 ## Installation
